@@ -1,0 +1,14 @@
+<div *ngIf="user">
+  <h1>Welcome, {{ user.first_name }}!</h1>
+
+  <div *ngIf="isAdmin">
+    <p>You are an admin.</p>
+    <!-- Admin-specific content -->
+  </div>
+
+  <div *ngIf="!isAdmin">
+    <p>You are a customer.</p>
+    <!-- Customer-specific content -->
+  </div>
+  <button (click)="logout()">Logout</button>
+</div>
