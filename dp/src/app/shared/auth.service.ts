@@ -4,8 +4,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { UserData } from '../models/user-data.model';
 import { BehaviorSubject } from 'rxjs';
-import * as jwt from 'jsonwebtoken';
-import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -54,7 +52,6 @@ export class AuthService {
           const tokenData = JSON.stringify({
             role: userData.role,
             email: userData.email,
-            secret: environment.secretKey,
           });
 
           const encodedToken = btoa(tokenData);
