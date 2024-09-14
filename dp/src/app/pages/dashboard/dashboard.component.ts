@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 
 @Component({
@@ -6,20 +6,18 @@ import { AuthService } from '../../shared/auth.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent {
-  user: any;
-  isAdmin: boolean = false;
+export class DashboardComponent implements OnInit {
+  category: string | undefined;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authService.user$.subscribe((user) => {
-      this.user = user;
-      this.isAdmin = user?.role === 'admin';
-    });
-  }
+  ngOnInit(): void {}
 
   logout() {
     this.authService.logout();
+  }
+  onShowCategory(newCategory: string): void {
+    this.category = newCategory;
+    console.log(this.category);
   }
 }

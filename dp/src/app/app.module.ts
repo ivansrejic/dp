@@ -29,6 +29,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HeaderComponent } from './components/header/header.component';
 import { OrdersComponent } from './components/orders/orders.component';
+import { FiltersComponent } from './pages/dashboard/filters/filters.component';
+import { ProductCardComponent } from './pages/dashboard/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     AdminPanelComponent,
     HeaderComponent,
     OrdersComponent,
+    FiltersComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
