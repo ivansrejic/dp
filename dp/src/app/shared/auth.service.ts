@@ -14,10 +14,9 @@ export class AuthService {
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router,
-    private afAuth: AngularFireAuth
+    private router: Router
   ) {
-    this.afAuth.onAuthStateChanged((user) => {
+    this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
         this.firestore
           .collection('users')
@@ -34,7 +33,7 @@ export class AuthService {
 
   async login(email: string, password: string) {
     try {
-      const userCredential = await this.afAuth.signInWithEmailAndPassword(
+      const userCredential = await this.fireAuth.signInWithEmailAndPassword(
         email,
         password
       );
