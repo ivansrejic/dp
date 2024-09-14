@@ -15,9 +15,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.user = user;
-      if (user) {
-        this.isAdmin = user.role === 'admin';
-      }
+      this.isAdmin = user?.role === 'admin';
     });
   }
 

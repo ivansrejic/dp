@@ -4,6 +4,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { UserData } from '../models/user-data.model';
 import { BehaviorSubject } from 'rxjs';
+import * as jwt from 'jsonwebtoken';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -33,16 +35,6 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    // this.fireAuth.signInWithEmailAndPassword(email, password).then(
-    //   () => {
-    //     localStorage.setItem('token', 'true');
-    //     this.router.navigate(['/dashboard']);
-    //   },
-    //   (err) => {
-    //     alert('Error loggin in');
-    //     this.router.navigate(['/login']);
-    //   }
-    // );
     try {
       const userCredential = await this.afAuth.signInWithEmailAndPassword(
         email,
@@ -51,7 +43,6 @@ export class AuthService {
       const user = userCredential.user;
 
       if (user) {
-        localStorage.setItem('token', 'true');
         const userDoc = await this.firestore
           .collection('users')
           .doc(user.uid)
@@ -60,16 +51,23 @@ export class AuthService {
         const userData = userDoc?.data() as UserData;
 
         if (userData) {
-          if (userData.role === 'admin') {
-            this.router.navigate(['/admin-panel']);
-          } else {
-            this.router.navigate(['/dashboard']);
-          }
+          const tokenData = JSON.stringify({
+            role: userData.role,
+            email: userData.email,
+            secret: environment.secretKey,
+          });
+
+          const encodedToken = btoa(tokenData);
+
+          localStorage.setItem('token', encodedToken);
+
+          this.router.navigate([
+            userData.role === 'admin' ? '/admin-panel' : '/dashboard',
+          ]);
         }
       }
     } catch (error) {
       console.error('Login error:', error);
-      // Handle error (e.g., show a message to the user)
     }
   }
 

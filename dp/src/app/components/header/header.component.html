@@ -1,0 +1,8 @@
+<mat-toolbar class="bg-black">
+  <a routerLink="/dashboard">HOME</a>
+  <div *ngIf="isAdmin" class="bg-black">
+    <p>You are an admin.</p>
+  </div>
+  <span class="example-spacer"></span>
+  <button mat-flat-button (click)="logout()">Logout</button>
+</mat-toolbar>
