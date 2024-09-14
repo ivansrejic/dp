@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
