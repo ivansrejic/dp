@@ -3,16 +3,34 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { UserData } from '../models/user-data.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private userSubject = new BehaviorSubject<any>(null);
+  user$ = this.userSubject.asObservable();
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router
-  ) {}
+    private router: Router,
+    private afAuth: AngularFireAuth
+  ) {
+    this.afAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.firestore
+          .collection('users')
+          .doc(user.uid)
+          .valueChanges()
+          .subscribe((userData) => {
+            this.userSubject.next(userData);
+          });
+      } else {
+        this.userSubject.next(null);
+      }
+    });
+  }
 
   login(email: string, password: string) {
     this.fireAuth.signInWithEmailAndPassword(email, password).then(
