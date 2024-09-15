@@ -31,6 +31,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { FiltersComponent } from './pages/dashboard/filters/filters.component';
 import { ProductCardComponent } from './pages/dashboard/product-card/product-card.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ProductCardComponent } from './pages/dashboard/product-card/product-car
     OrdersComponent,
     FiltersComponent,
     ProductCardComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

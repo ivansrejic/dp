@@ -3,11 +3,12 @@
   <mat-drawer mode="side" class="sidebar" opened>
     <app-filters (showCategory)="onShowCategory($event)" />
   </mat-drawer>
-  <mat-drawer-content class="pt-4">
-    <mat-grid-list rowHeight="500px" cols="3" gutterSize="16">
-      <mat-grid-tile>
-        <app-product-card />
-      </mat-grid-tile>
-    </mat-grid-list>
+  <mat-drawer-content>
+    <div class="flex flex-wrap gap-8 p-4">
+      <app-product-card
+        *ngFor="let product of products"
+        [product]="product"
+      ></app-product-card>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>
