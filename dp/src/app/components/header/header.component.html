@@ -3,33 +3,32 @@
   <span class="example-spacer"></span>
   <div>
     <button class="mr-10" mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon [matBadge]="1">shopping_cart</mat-icon>
+      <mat-icon [matBadge]="cart?.length">shopping_cart</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <div class="p-2 flex justify-between">My Cart <span>1 Items</span></div>
+      <div class="p-2 flex justify-between">
+        My Cart <span>{{ cart?.length }} Items</span>
+      </div>
       <div class="p-2 divide-y divide-solid">
         <div class="py-3">
           <!-- Product -->
-          <div class="flex justify-between font-light mb-2">
-            Dzemper x 2
-            <span class="font-bold ml-16">{{ "99" | currency }}</span>
-          </div>
-          <div class="flex justify-between font-light mb-2">
-            Dzemper x 2
-            <span class="font-bold ml-16">{{ "99" | currency }}</span>
-          </div>
-          <div class="flex justify-between font-light mb-2">
-            Dzemper x 2
-            <span class="font-bold ml-16">{{ "99" | currency }}</span>
+          <div
+            *ngFor="let item of cart"
+            class="flex justify-between font-light mb-2"
+          >
+            {{ item.name }} x {{ item.cart_quantity }}
+            <span class="font-bold ml-16">{{
+              item.price * (item.cart_quantity ?? 1) | currency
+            }}</span>
           </div>
         </div>
         <div class="flex justify-between py-3 font-light">
           Total:
-          <span class="font-bold">{{ "1000" | currency }}</span>
+          <span class="font-bold">{{ totalAmount | currency }}</span>
         </div>
         <!-- Footer -->
         <div class="pt-8 flex items-center justify-between">
-          <button mat-icon-button>
+          <button mat-icon-button (click)="emptyCart()">
             <mat-icon color="red"> delete </mat-icon>
           </button>
           <a mat-raised-button routerLink="/cart">View Cart</a>

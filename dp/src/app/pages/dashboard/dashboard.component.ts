@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
 import { ProductsService } from '../../shared/products.service';
 import { Product } from '../../models/product.model';
+import { CartService } from '../../shared/cart.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,9 +19,12 @@ export class DashboardComponent implements OnInit {
 
   filteredProducts: Array<Product> = [];
 
+  cart: Array<Product> = [];
+
   constructor(
     private authService: AuthService,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -58,5 +62,14 @@ export class DashboardComponent implements OnInit {
   onShowBrand(newBrand: string | undefined): void {
     this.brand = newBrand;
     this.filterProducts();
+  }
+
+  addToCart(productID: number) {
+    const product = this.products.find((product) => product.id === productID);
+    if (product) {
+      this.cartService.addToCart(product);
+    }
+
+    this.cartService.getCart().subscribe((cart) => console.log(cart));
   }
 }

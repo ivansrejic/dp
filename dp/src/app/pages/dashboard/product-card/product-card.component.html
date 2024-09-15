@@ -22,7 +22,7 @@
       <button mat-icon-button>
         <mat-icon color="red"> favorite </mat-icon>
       </button>
-      <button mat-button>
+      <button mat-button (click)="addToCart(product.id)">
         add to cart <mat-icon color="red"> shopping_cart </mat-icon>
       </button>
     </div>
