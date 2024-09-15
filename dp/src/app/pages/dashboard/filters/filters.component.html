@@ -1,12 +1,34 @@
-<mat-expansion-panel *ngIf="categories">
-  <mat-expansion-panel-header>
-    <mat-panel-title> Categories </mat-panel-title>
-  </mat-expansion-panel-header>
-  <mat-selection-list [multiple]="false">
-    <mat-list-option *ngFor="let category of categories" [value]="category">
-      <button class="w-full" (click)="onShowCategory(category)">
-        {{ category }}
-      </button>
-    </mat-list-option>
-  </mat-selection-list>
-</mat-expansion-panel>
+<div class="mb-5">
+  <mat-expansion-panel *ngIf="categories">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Categories </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-selection-list [multiple]="false">
+      <mat-list-option selected="true">
+        <button (click)="removeCategoryFilter()">Show all</button>
+      </mat-list-option>
+      <mat-list-option *ngFor="let category of categories" [value]="category">
+        <button class="w-full" (click)="onShowCategory(category)">
+          {{ category }}
+        </button>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+</div>
+<div>
+  <mat-expansion-panel *ngIf="brands">
+    <mat-expansion-panel-header>
+      <mat-panel-title> Brand </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-selection-list [multiple]="false">
+      <mat-list-option selected="true">
+        <button (click)="removeBrandFilter()">Show all</button>
+      </mat-list-option>
+      <mat-list-option *ngFor="let brand of brands" [value]="brand">
+        <button class="w-full" (click)="onShowBrand(brand)">
+          {{ brand }}
+        </button>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-expansion-panel>
+</div>

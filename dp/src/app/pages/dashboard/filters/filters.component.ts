@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-filters',
@@ -7,13 +14,37 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class FiltersComponent implements OnInit {
   @Output() showCategory = new EventEmitter<string>();
+  @Output() showBrand = new EventEmitter<string>();
+  @Input() categories: Array<string> | undefined;
+  @Input() brands: Array<string> | undefined;
 
-  categories = ['shoes', 'jackets', 't-shirts'];
+  categoryFilter: string | undefined;
+  brandFilter: string | undefined;
 
   constructor() {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.categories);
+  }
+
+  ngOnChanges(): void {
+    console.log('Categories updated:', this.categories);
+  }
 
   onShowCategory(category: string): void {
-    this.showCategory.emit(category);
+    this.categoryFilter = category;
+    this.showCategory.emit(this.categoryFilter);
+  }
+  onShowBrand(brand: string): void {
+    this.brandFilter = brand;
+    this.showBrand.emit(this.brandFilter);
+  }
+
+  removeCategoryFilter() {
+    this.categoryFilter = undefined;
+    this.showCategory.emit(this.categoryFilter);
+  }
+  removeBrandFilter() {
+    this.brandFilter = undefined;
+    this.showBrand.emit(this.brandFilter);
   }
 }

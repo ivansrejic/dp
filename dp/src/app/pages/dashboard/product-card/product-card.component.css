@@ -1,5 +1,12 @@
 .example-card {
   max-width: 400px;
+  @apply shadow-lg !important;
+  transition: box-shadow 0.3s ease;
+}
+.example-card:hover {
+  /* box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1),
+    /* Soft outer shadow */
+  @apply shadow-2xl !important;
 }
 
 .example-header-image {

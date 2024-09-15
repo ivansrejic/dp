@@ -32,6 +32,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { FiltersComponent } from './pages/dashboard/filters/filters.component';
 import { ProductCardComponent } from './pages/dashboard/product-card/product-card.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { CartComponent } from './pages/cart/cart.component';
     MatTableModule,
     MatBadgeModule,
     MatSnackBarModule,
+    MatSelectModule,
   ],
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),

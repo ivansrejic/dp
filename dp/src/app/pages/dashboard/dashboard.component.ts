@@ -10,7 +10,13 @@ import { Product } from '../../models/product.model';
 })
 export class DashboardComponent implements OnInit {
   category: string | undefined;
+  brand: string | undefined;
   products: Array<Product> = [];
+
+  categories: Array<string> = [];
+  brands: Array<string> = [];
+
+  filteredProducts: Array<Product> = [];
 
   constructor(
     private authService: AuthService,
@@ -20,15 +26,37 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe((products) => {
       this.products = products;
-      console.log(this.products); // Check the retrieved products in the console
+      this.filteredProducts = products;
+
+      this.categories = [
+        ...new Set(products.map((product) => product.category)),
+      ];
+
+      this.brands = [...new Set(products.map((product) => product.brand))];
+      console.log(this.categories);
+      console.log(this.brands);
     });
   }
 
   logout() {
     this.authService.logout();
   }
-  onShowCategory(newCategory: string): void {
+
+  filterProducts(): void {
+    this.filteredProducts = this.products.filter((product) => {
+      return (
+        (this.category ? product.category === this.category : true) &&
+        (this.brand ? product.brand === this.brand : true)
+      );
+    });
+  }
+  onShowCategory(newCategory: string | undefined): void {
     this.category = newCategory;
-    this.products = this.products.filter((product) => product.size === 'L');
+    this.filterProducts();
+  }
+
+  onShowBrand(newBrand: string | undefined): void {
+    this.brand = newBrand;
+    this.filterProducts();
   }
 }
