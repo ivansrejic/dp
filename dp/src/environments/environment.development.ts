@@ -8,4 +8,5 @@ export const environment = {
     messagingSenderId: '718690242063',
     appId: '1:718690242063:web:7bf2d99d313dca1eeadd7a',
   },
+  secretKey: 'najsigurnija-sifra',
 };

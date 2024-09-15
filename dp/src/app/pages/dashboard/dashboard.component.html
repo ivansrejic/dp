@@ -1,14 +1,20 @@
-<div *ngIf="user">
-  <h1>Welcome, {{ user.first_name }}!</h1>
-
-  <div *ngIf="isAdmin">
-    <p>You are an admin.</p>
-    <!-- Admin-specific content -->
-  </div>
-
-  <div *ngIf="!isAdmin">
-    <p>You are a customer.</p>
-    <!-- Customer-specific content -->
-  </div>
-  <button (click)="logout()">Logout</button>
-</div>
+<app-header />
+<mat-drawer-container class="min-h-full max-w-full mx-auto">
+  <mat-drawer mode="side" class="sidebar" opened>
+    <app-filters
+      (showCategory)="onShowCategory($event)"
+      (showBrand)="onShowBrand($event)"
+      [categories]="categories"
+      [brands]="brands"
+    />
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="flex flex-wrap gap-8 p-4">
+      <app-product-card
+        *ngFor="let product of filteredProducts"
+        [product]="product"
+        (addProduct)="addToCart($event.toString())"
+      ></app-product-card>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

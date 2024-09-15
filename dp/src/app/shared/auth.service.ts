@@ -11,20 +11,21 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
+
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private router: Router,
-    private afAuth: AngularFireAuth
+    private router: Router
   ) {
-    this.afAuth.onAuthStateChanged((user) => {
+    this.fireAuth.onAuthStateChanged((user) => {
       if (user) {
         this.firestore
           .collection('users')
           .doc(user.uid)
           .valueChanges()
-          .subscribe((userData) => {
-            this.userSubject.next(userData);
+          .subscribe((userData: any) => {
+            const userWithID = { ...userData, id: user.uid };
+            this.userSubject.next(userWithID);
           });
       } else {
         this.userSubject.next(null);
@@ -33,25 +34,14 @@ export class AuthService {
   }
 
   async login(email: string, password: string) {
-    // this.fireAuth.signInWithEmailAndPassword(email, password).then(
-    //   () => {
-    //     localStorage.setItem('token', 'true');
-    //     this.router.navigate(['/dashboard']);
-    //   },
-    //   (err) => {
-    //     alert('Error loggin in');
-    //     this.router.navigate(['/login']);
-    //   }
-    // );
     try {
-      const userCredential = await this.afAuth.signInWithEmailAndPassword(
+      const userCredential = await this.fireAuth.signInWithEmailAndPassword(
         email,
         password
       );
       const user = userCredential.user;
 
       if (user) {
-        localStorage.setItem('token', 'true');
         const userDoc = await this.firestore
           .collection('users')
           .doc(user.uid)
@@ -60,16 +50,22 @@ export class AuthService {
         const userData = userDoc?.data() as UserData;
 
         if (userData) {
-          if (userData.role === 'admin') {
-            this.router.navigate(['/admin-panel']);
-          } else {
-            this.router.navigate(['/dashboard']);
-          }
+          const tokenData = JSON.stringify({
+            role: userData.role,
+            email: userData.email,
+          });
+
+          const encodedToken = btoa(tokenData);
+
+          localStorage.setItem('token', encodedToken);
+
+          this.router.navigate([
+            userData.role === 'admin' ? '/admin-panel' : '/dashboard',
+          ]);
         }
       }
     } catch (error) {
       console.error('Login error:', error);
-      // Handle error (e.g., show a message to the user)
     }
   }
 

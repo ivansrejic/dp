@@ -1,0 +1,42 @@
+<app-header />
+<mat-card class="cart-card">
+  <mat-card-header>
+    <mat-card-title>Order Details</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="cart-items">
+      <mat-list>
+        <mat-list-item *ngFor="let item of cart" class="cart-item">
+          <div class="flex">
+            <img [src]="item.img" alt="{{ item.name }}" class="product-image" />
+            <div class="item-details">
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-quantity">
+                Quantity: {{ item.cart_quantity }}
+              </div>
+              <div class="item-price">
+                {{ item.price * (item.cart_quantity ?? 1) | currency }}
+              </div>
+            </div>
+          </div>
+          <button
+            mat-raised-button
+            (click)="removeOneItem(item.id)"
+            class="removeButton"
+          >
+            Remove
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="total-amount">
+      <span>Total:</span>
+      <span>{{ totalAmount | currency }}</span>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="createOrder()" mat-raised-button color="primary">
+      Place Order
+    </button>
+  </mat-card-actions>
+</mat-card>

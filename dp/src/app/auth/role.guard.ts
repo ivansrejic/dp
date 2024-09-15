@@ -2,36 +2,44 @@ import { Injectable } from '@angular/core';
 import {
   CanActivate,
   ActivatedRouteSnapshot,
-  Router,
   RouterStateSnapshot,
+  Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
-import { AuthService } from '../shared/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const allowedRoles = next.data['allowedRoles'] as Array<string>;
+    const encodedToken = localStorage.getItem('token');
 
-    return this.authService.user$.pipe(
-      take(1),
-      map((user) => {
-        return !!user && allowedRoles.includes(user.role);
-      }),
-      tap((isAuthorized) => {
-        if (!isAuthorized) {
-          console.error('Access denied');
-          this.router.navigate(['/login']); // Redirect to login or unauthorized page
-        }
-      })
-    );
+    if (!encodedToken) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+
+    try {
+      const decodedToken = atob(encodedToken);
+      const tokenData = JSON.parse(decodedToken);
+
+      const userRole = tokenData.role;
+      const allowedRoles = next.data['allowedRoles'];
+
+      if (allowedRoles.includes(userRole)) {
+        return true;
+      } else {
+        this.router.navigate(['/dashboard']); //Napravi stranicu, i dugme koje ce da te vrati na stranicu kojoj mozers da pristupis
+        return false;
+      }
+    } catch (error) {
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

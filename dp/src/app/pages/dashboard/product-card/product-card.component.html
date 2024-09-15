@@ -1,0 +1,30 @@
+<mat-card class="example-card" appearance="outlined">
+  <img
+    mat-card-image
+    src="{{ product.img }}"
+    alt="{{ product.img }}"
+    class="rounded-sm w-96 h-72"
+  />
+  <mat-card-header>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+    <mat-card-subtitle>{{ product.brand }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ product.price | currency }}</p>
+  </mat-card-content>
+  <mat-card-content>
+    <p>
+      Size: <span class="text-bold">{{ product.size }}</span>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div class="flex w-full justify-between">
+      <button mat-icon-button>
+        <mat-icon color="red"> favorite </mat-icon>
+      </button>
+      <button mat-button (click)="addToCart(product.id)">
+        add to cart <mat-icon color="red"> shopping_cart </mat-icon>
+      </button>
+    </div>
+  </mat-card-actions>
+</mat-card>

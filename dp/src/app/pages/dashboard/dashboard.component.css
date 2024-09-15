@@ -1,0 +1,6 @@
+.sidebar {
+  @apply bg-gray-100 !important;
+  padding: 12px;
+  width: 300px;
+  border-radius: 0;
+}
