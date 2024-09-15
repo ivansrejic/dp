@@ -235,4 +235,35 @@ export class ProductsService {
         )
       );
   }
+
+  addProductToFavorites(userID: string, product: Product): void {
+    const userRef = this.firestore.collection('users').doc(userID);
+
+    userRef.get().subscribe((doc) => {
+      if (doc.exists) {
+        const userData = doc.data() as any;
+        const favorites = userData.favorites;
+
+        const productExists = favorites.some(
+          (fav: Product) => fav.id === product.id
+        );
+
+        if (!productExists) {
+          favorites.push(product);
+          userRef
+            .update({
+              favorites: favorites,
+            })
+            .then(() => {
+              alert('Product added to favorites');
+            })
+            .catch((error) => {
+              console.error('Error updating favorites: ', error);
+            });
+        } else {
+          alert('This product is already in favorites');
+        }
+      }
+    });
+  }
 }

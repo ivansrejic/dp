@@ -3,6 +3,7 @@ import { Product } from '../../models/product.model';
 import { CartService } from '../../shared/cart.service';
 import { OrderService } from '../../shared/order.service';
 import { AuthService } from '../../shared/auth.service';
+import { UserData } from '../../models/user-data.model';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +14,7 @@ export class CartComponent {
   cart: Array<Product> | undefined;
   totalAmount: number = 0;
 
-  userID: string | undefined;
+  user: UserData | undefined;
 
   constructor(
     private cartService: CartService,
@@ -26,7 +27,7 @@ export class CartComponent {
     //Add 'implements OnInit' to the class.
     this.authService.user$.subscribe((user) => {
       if (user) {
-        this.userID = user.id;
+        this.user = user;
       }
     });
     this.cartService.getCart().subscribe((cart) => (this.cart = cart));
@@ -41,10 +42,10 @@ export class CartComponent {
 
   createOrder() {
     console.log(this.cart);
-    if (this.cart && this.userID) {
+    if (this.cart && this.user) {
       if (this.cart.length === 0) return console.log(Error);
       this.orderService
-        .createOrder(this.userID, this.cart)
+        .createOrder(this.user, this.cart)
         .then(() => {
           console.log('Order successfull');
           alert('Uspesna porudzbina');

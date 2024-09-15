@@ -19,8 +19,19 @@
   </mat-card-content>
   <mat-card-actions>
     <div class="flex w-full justify-between">
-      <button mat-icon-button>
-        <mat-icon color="red"> favorite </mat-icon>
+      <button
+        *ngIf="isFavorite"
+        mat-icon-button
+        (click)="addToFavorites(product)"
+      >
+        <mat-icon class="favorite-active"> favorite </mat-icon>
+      </button>
+      <button
+        *ngIf="!isFavorite"
+        mat-icon-button
+        (click)="addToFavorites(product)"
+      >
+        <mat-icon> favorite </mat-icon>
       </button>
       <button mat-button (click)="addToCart(product.id)">
         add to cart <mat-icon color="red"> shopping_cart </mat-icon>

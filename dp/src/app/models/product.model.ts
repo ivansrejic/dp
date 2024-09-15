@@ -8,4 +8,5 @@ export interface Product {
   quantity: number;
   img: string;
   cart_quantity?: number;
+  is_favorite?: boolean;
 }

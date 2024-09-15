@@ -27,14 +27,16 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.required],
       phone: ['', Validators.required],
       address: ['', Validators.required],
-      favorites: [],
       role: 'customer',
     });
   }
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const userData = this.registerForm.value;
+      const userData = {
+        ...this.registerForm.value,
+        favorites: [], // Ensure favorites is initialized as an empty array
+      };
       this.auth.register(userData);
     }
   }
