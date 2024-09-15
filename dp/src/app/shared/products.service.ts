@@ -228,8 +228,9 @@ export class ProductsService {
       .pipe(
         map((actions) =>
           actions.map((a) => {
-            const data = a.payload.doc.data() as Product;
-            return data;
+            const data = a.payload.doc.data() as Object;
+            const id = a.payload.doc.id; // Get the document ID
+            return { id, ...data } as Product;
           })
         )
       );

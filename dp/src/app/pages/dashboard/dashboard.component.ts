@@ -30,15 +30,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.productService.getProducts().subscribe((products) => {
       this.products = products;
-      this.filteredProducts = products;
+      this.filteredProducts = products.filter(
+        (product) => product.quantity > 0
+      );
 
       this.categories = [
         ...new Set(products.map((product) => product.category)),
       ];
 
       this.brands = [...new Set(products.map((product) => product.brand))];
-      console.log(this.categories);
-      console.log(this.brands);
     });
   }
 
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
     this.filterProducts();
   }
 
-  addToCart(productID: number) {
+  addToCart(productID: string) {
     const product = this.products.find((product) => product.id === productID);
     if (product) {
       this.cartService.addToCart(product);

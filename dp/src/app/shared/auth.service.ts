@@ -11,6 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
+
   constructor(
     private fireAuth: AngularFireAuth,
     private firestore: AngularFirestore,
@@ -22,8 +23,9 @@ export class AuthService {
           .collection('users')
           .doc(user.uid)
           .valueChanges()
-          .subscribe((userData) => {
-            this.userSubject.next(userData);
+          .subscribe((userData: any) => {
+            const userWithID = { ...userData, id: user.uid };
+            this.userSubject.next(userWithID);
           });
       } else {
         this.userSubject.next(null);

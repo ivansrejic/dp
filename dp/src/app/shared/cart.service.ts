@@ -61,32 +61,23 @@ export class CartService {
     this.updateTotalAmount();
   }
 
-  removeOneItemFromCart(productID: number): void {
-    // Get the current cart
+  removeOneItemFromCart(productID: string): void {
     const currentCart = this.cartSubject.value;
-
-    // Find the index of the product to remove or update
     const productIndex = currentCart.findIndex(
       (product) => product.id === productID
     );
 
     if (productIndex !== -1) {
-      // Decrease cart_quantity by 1
       const updatedCart = [...currentCart];
       const product = updatedCart[productIndex];
 
       if (product.cart_quantity && product.cart_quantity > 1) {
-        // Reduce quantity if more than 1
         product.cart_quantity--;
       } else {
-        // Remove product if quantity is 1 or less
         updatedCart.splice(productIndex, 1);
       }
 
-      // Update the cart with the modified or removed product
       this.cartSubject.next(updatedCart);
-
-      // Update the total amount
       this.updateTotalAmount();
     }
   }

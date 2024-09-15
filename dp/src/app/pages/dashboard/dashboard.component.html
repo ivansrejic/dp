@@ -13,7 +13,7 @@
       <app-product-card
         *ngFor="let product of filteredProducts"
         [product]="product"
-        (addProduct)="addToCart($event)"
+        (addProduct)="addToCart($event.toString())"
       ></app-product-card>
     </div>
   </mat-drawer-content>

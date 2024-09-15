@@ -22,9 +22,7 @@ export class FiltersComponent implements OnInit {
   brandFilter: string | undefined;
 
   constructor() {}
-  ngOnInit(): void {
-    console.log(this.categories);
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
     console.log('Categories updated:', this.categories);

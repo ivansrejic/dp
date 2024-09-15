@@ -8,7 +8,7 @@ import { Product } from '../../../models/product.model';
 })
 export class ProductCardComponent {
   @Input() product!: Product;
-  @Output() addProduct = new EventEmitter<number>();
+  @Output() addProduct = new EventEmitter<string>();
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -17,7 +17,7 @@ export class ProductCardComponent {
     console.log(this.product);
   }
 
-  addToCart(id: number) {
+  addToCart(id: string) {
     this.addProduct.emit(id);
   }
 }
