@@ -1,0 +1,34 @@
+.favorites-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.favorites-list {
+  width: 60%; /* Set the width of the cards container */
+}
+
+.product-card {
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.card-content-wrapper {
+  flex: 2;
+}
+
+.product-image-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.product-image {
+  height: 100%;
+  width: 300px;
+  object-fit: contain;
+  border-radius: 4px;
+}

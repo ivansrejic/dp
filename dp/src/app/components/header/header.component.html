@@ -1,5 +1,11 @@
 <mat-toolbar class="header">
-  <a routerLink="/dashboard">DP</a>
+  <div class="flex gap-5">
+    <a routerLink="/dashboard">Home</a>
+    <a routerLink="/favorites">Favorites</a>
+    <a routerLink="/orders">Orders</a>
+    <a routerLink="/profile">Profile</a>
+  </div>
+
   <span class="example-spacer"></span>
   <div>
     <button class="mr-10" mat-icon-button [matMenuTriggerFor]="menu">

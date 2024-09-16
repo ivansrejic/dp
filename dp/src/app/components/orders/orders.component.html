@@ -1,1 +1,66 @@
-<p>orders works!</p>
+<app-header />
+<div class="px-48 pt-12">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orders">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Order ID : {{ order.id }} </mat-panel-title>
+        <div
+          *ngIf="order.status === 'delivered'"
+          class="font-bold p-2 bg-green-300 mr-5 rounded-xl"
+        >
+          {{ order.status }}
+        </div>
+        <div
+          *ngIf="order.status === 'pending'"
+          class="font-bold p-2 bg-yellow-300 mr-5 rounded-xl"
+        >
+          {{ order.status }}
+        </div>
+        <div
+          *ngIf="order.status === 'canceled'"
+          class="font-bold p-2 bg-red-300 mr-5 rounded-xl"
+        >
+          {{ order.status }}
+        </div>
+      </mat-expansion-panel-header>
+      <div>
+        <p>{{ order.user.first_name + " " + order.user.last_name }}</p>
+        <p>{{ order.user.address }}</p>
+        <p>{{ order.user.email }}</p>
+        <p>{{ order.user.phone }}</p>
+      </div>
+      <div class="flex flex-col flex-1">
+        <mat-card class="my-2" *ngFor="let item of order.products">
+          <div class="flex">
+            <img [src]="item.img" alt="{{ item.name }}" class="product-image" />
+            <div class="item-details">
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-quantity">Quantity: {{ item.quantity }}</div>
+              <div class="item-price">
+                {{ item.price * item.quantity | currency }}
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <p>Total amount: {{ order.totalAmount | currency }}</p>
+      <div *ngIf="isAdmin">
+        <button
+          *ngIf="order.status === 'pending'"
+          mat-stroked-button
+          (click)="deliverOrder(order.id)"
+        >
+          Deliver
+        </button>
+        <button
+          class="ml-2"
+          *ngIf="order.status === 'pending'"
+          mat-stroked-button
+          (click)="cancelOrder(order.id)"
+        >
+          Cancel order
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

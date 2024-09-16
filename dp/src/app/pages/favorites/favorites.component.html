@@ -1,0 +1,24 @@
+<app-header />
+<div class="favorites-container">
+  <div class="favorites-list">
+    <mat-card *ngFor="let product of favorites" class="product-card">
+      <div class="card-content-wrapper">
+        <mat-card-header>
+          <mat-card-title>{{ product.name }}</mat-card-title>
+          <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p><strong>Price:</strong> {{ product.price | currency }}</p>
+          <p><strong>Stock:</strong> {{ product.quantity }} items available</p>
+          <p><strong>Size:</strong> {{ product.size }}</p>
+        </mat-card-content>
+        <!-- <mat-card-actions>
+          <button mat-raised-button color="warn">Remove from Favorites</button>
+        </mat-card-actions> -->
+      </div>
+      <div class="product-image">
+        <img mat-card-image [src]="product.img" alt="{{ product.name }}" />
+      </div>
+    </mat-card>
+  </div>
+</div>

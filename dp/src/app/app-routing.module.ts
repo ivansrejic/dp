@@ -7,6 +7,8 @@ import { RoleGuard } from './auth/role.guard';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: 'favorites',
+    component: FavoritesComponent,
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
   },
 ];
 

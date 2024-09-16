@@ -33,6 +33,8 @@ import { FiltersComponent } from './pages/dashboard/filters/filters.component';
 import { ProductCardComponent } from './pages/dashboard/product-card/product-card.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { MatSelectModule } from '@angular/material/select';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { MatSelectModule } from '@angular/material/select';
     FiltersComponent,
     ProductCardComponent,
     CartComponent,
+    FavoritesComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

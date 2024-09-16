@@ -102,4 +102,17 @@ export class AuthService {
       }
     );
   }
+
+  async updateUserProfile(updatedUser: Partial<UserData>): Promise<void> {
+    try {
+      await this.firestore
+        .collection('users')
+        .doc(updatedUser.id)
+        .update(updatedUser);
+      console.log('User profile updated successfully');
+    } catch (error) {
+      console.error('Error updating user profile', error);
+      throw error;
+    }
+  }
 }
